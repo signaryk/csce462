@@ -15,8 +15,6 @@ var (
 	disp [8]gpio.Pin
 )
 
-var Cyclechan chan bool
-
 func setup() {
 	for i := 0; i < 6; i++ {
 		pins[i].Output()
@@ -39,9 +37,6 @@ func teardown() {
 }
 
 func cycle() {
-  <-Cyclechan
-  fmt.Println("Channel read")
-
 	pins[5].Low()
 	for i := 0; i < 3; i++{
 		pins[4].High()
@@ -176,14 +171,7 @@ func numbers(number int) {
 	}
 }
 
-func handler_func(button *gpio.Pin){
-  fmt.Println("handling")
-  Cyclechan <- true
-  fmt.Println("Channel written")
-}
-
 func main() {
-	Cyclechan = make(chan bool, 1)
   var w sync.WaitGroup
   w.Add(1)
 
@@ -207,7 +195,7 @@ func main() {
 
   button.Watch(gpio.EdgeRising, func(pin *gpio.Pin){
     fmt.Println("Handling")
-    Cyclechan <- true
+    cycle()
     fmt.Println("Channel written")
   })
 
