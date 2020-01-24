@@ -177,6 +177,7 @@ func numbers(number int) {
 }
 
 func handler_func(button *gpio.Pin){
+  fmt.Println("handling")
   Cyclechan <- true
   fmt.Println("Channel written")
 }
