@@ -190,6 +190,7 @@ func main() {
 
 	setup()
 
+  for {}
 	/*
   for {
 		but := button.Read()
