@@ -12,7 +12,7 @@ var (
 	pins [6]gpio.Pin
 	// Outline	      A,  B,  C,  D,  E,  F,  G1,G2
 	disp [8]gpio.Pin
-  cyclechan = make(chan bool)
+  Cyclechan = make(chan bool)
 )
 
 func setup() {
@@ -37,7 +37,7 @@ func teardown() {
 }
 
 func cycle() {
-  <-cyclechan
+  <-Cyclechan
 
 	pins[5].Low()
 	for i := 0; i < 3; i++{
@@ -174,7 +174,7 @@ func numbers(number int) {
 }
 
 func handler(*gpio.Pin){
-  cyclechan <- true
+  Cyclechan <- true
 }
 
 func main() {
