@@ -9,11 +9,9 @@ import (
 
 var (
 // Pin Outline:       R1, B1, G1, R2, B2, G2
-	pins = []gpio.Pin{*gpio.NewPin(17), *gpio.NewPin(22), *gpio.NewPin(27),
-		*gpio.NewPin(18), *gpio.NewPin(24), *gpio.NewPin(23)}
+	pins = [6]gpio.Pin
 	// Outline	      A,  B,  C,  D,  E,  F,  G1,G2
-	disp = []gpio.Pin{*gpio.NewPin(13), *gpio.NewPin(19), *gpio.NewPin(25), *gpio.NewPin(16),
-		*gpio.NewPin(20), *gpio.NewPin(26), *gpio.NewPin(6), *gpio.NewPin(12)}
+	disp = [8]gpio.Pin
 
 )
 
@@ -178,6 +176,13 @@ func main() {
 	defer gpio.Close()
 
 	var button = gpio.NewPin(21)
+
+  // Pin Outline:       R1, B1, G1, R2, B2, G2
+	pins = []gpio.Pin{*gpio.NewPin(17), *gpio.NewPin(22), *gpio.NewPin(27),
+		*gpio.NewPin(18), *gpio.NewPin(24), *gpio.NewPin(23)}
+	// Outline	      A,  B,  C,  D,  E,  F,  G1,G2
+	disp = []gpio.Pin{*gpio.NewPin(13), *gpio.NewPin(19), *gpio.NewPin(25), *gpio.NewPin(16),
+		*gpio.NewPin(20), *gpio.NewPin(26), *gpio.NewPin(6), *gpio.NewPin(12)}
 
 	defer teardown(pins, disp)
 
