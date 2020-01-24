@@ -173,6 +173,10 @@ func numbers(number int) {
 	}
 }
 
+func handler(*gpio.Pin){
+  cyclechan <- true
+}
+
 func main() {
 	if err := gpio.Open(); err != nil {
 		fmt.Println(err)
@@ -194,9 +198,7 @@ func main() {
 
   go cycle()
 
-  button.Watch(gpio.EdgeRising, func(*gpio.Pin){
-    cyclechan <- true
-  })
+  button.Watch(gpio.EdgeRising, handler)
 
 	setup()
 
