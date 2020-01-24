@@ -36,7 +36,7 @@ func teardown() {
 	fmt.Println("Teardown complete")
 }
 
-func cycle() {
+func cycle(pin *gpio.Pin) {
 	pins[5].Low()
 	for i := 0; i < 3; i++{
 		pins[4].High()
@@ -193,15 +193,11 @@ func main() {
 
 	defer teardown()
 
-  button.Watch(gpio.EdgeRising, func(pin *gpio.Pin){
-    fmt.Println("Handling")
-    cycle()
-    fmt.Println("Channel written")
-  })
+  button.Watch(gpio.EdgeRising, cycle)
 
 	setup()
 
-  w.Wait()
+  for {}
 	/*
   for {
 		but := button.Read()
