@@ -38,6 +38,7 @@ func teardown() {
 
 func cycle() {
   <-Cyclechan
+  fmt.Println("Channel read")
 
 	pins[5].Low()
 	for i := 0; i < 3; i++{
@@ -175,6 +176,7 @@ func numbers(number int) {
 
 func handler(*gpio.Pin){
   Cyclechan <- true
+  fmt.Println("Channel written")
 }
 
 func main() {
