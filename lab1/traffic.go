@@ -167,8 +167,7 @@ func main() {
 
 	defer gpio.Close()
 
-	var button = gpio.NewPin(21) // Not 5,4
-	//var escape = gpio.Pin(21)
+	var button = gpio.NewPin(21)
 
 	// Pin Outline:       R1, B1, G1, R2, B2, G2
 	var pins = []gpio.Pin{*gpio.NewPin(17), *gpio.NewPin(22), *gpio.NewPin(27),
@@ -178,28 +177,9 @@ func main() {
 		*gpio.NewPin(20), *gpio.NewPin(26), *gpio.NewPin(6), *gpio.NewPin(12)}
 	defer teardown(pins, disp)
 
-	/*
-		for i := 0; i < 6; i++ {
-			pins[i].Output()
-			pins[i].High()
-			time.Sleep(time.Second)
-			pins[i].Low()
-		}
-		fmt.Println("LED testing complete")
-	*/
-
 	setup(pins, disp)
 
-	/*
-		for i := 0; i < 10; i++ {
-			numbers(i, disp)
-			fmt.Println(i)
-			time.Sleep(time.Second * 1)
-		}
-	*/
-
-	//res := escape.Read()
-	for /*res == gpio.Low*/ {
+	for {
 		but := button.Read()
 		if but == gpio.High {
 			cycle(pins, disp)
@@ -207,6 +187,5 @@ func main() {
 			numbers(-1, disp)
 			time.Sleep(time.Second * 17)
 		}
-		//res = escape.Read()
 	}
 }
