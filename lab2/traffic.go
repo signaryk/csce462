@@ -9,9 +9,9 @@ import (
 
 var (
 // Pin Outline:       R1, B1, G1, R2, B2, G2
-	pins = [6]gpio.Pin
+	pins [6]gpio.Pin
 	// Outline	      A,  B,  C,  D,  E,  F,  G1,G2
-	disp = [8]gpio.Pin
+	disp [8]gpio.Pin
 
 )
 
