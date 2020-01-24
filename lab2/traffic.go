@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/warthog618/gpio"
 	"os"
+  "sync"
 	"time"
 )
 
@@ -38,7 +39,7 @@ func teardown() {
 }
 
 func cycle() {
-  //<-Cyclechan
+  <-Cyclechan
   fmt.Println("Channel read")
 
 	pins[5].Low()
@@ -176,13 +177,14 @@ func numbers(number int) {
 }
 
 func handler(button *gpio.Pin){
-  button.Unwatch()
-  cycle()
-  button.Watch(gpio.EdgeRising, handler)
+  Cyclechan <- true
+  fmt.Println("Channel written")
 }
 
 func main() {
 	Cyclechan = make(chan bool, 1)
+  var w sync.WaitGroup
+  w.Add(1)
 
   if err := gpio.Open(); err != nil {
 		fmt.Println(err)
@@ -206,7 +208,7 @@ func main() {
 
 	setup()
 
-  for {}
+  w.Wait()
 	/*
   for {
 		but := button.Read()
