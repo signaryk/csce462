@@ -205,7 +205,11 @@ func main() {
 
 	defer teardown()
 
-  button.Watch(gpio.EdgeRising, handler_func)
+  button.Watch(gpio.EdgeRising, func(pin *gpio.Pin){
+    fmt.Println("Handling")
+    Cyclechan <- true
+    fmt.Println("Channel written")
+  })
 
 	setup()
 
