@@ -176,7 +176,7 @@ func numbers(number int) {
 	}
 }
 
-func handler(button *gpio.Pin){
+func handler_func(button *gpio.Pin){
   Cyclechan <- true
   fmt.Println("Channel written")
 }
@@ -204,7 +204,7 @@ func main() {
 
 	defer teardown()
 
-  button.Watch(gpio.EdgeRising, handler)
+  button.Watch(gpio.EdgeRising, handler_func)
 
 	setup()
 
