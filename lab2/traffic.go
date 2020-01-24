@@ -15,7 +15,7 @@ var (
 
 )
 
-func setup(pins []gpio.Pin, disp []gpio.Pin) {
+func setup() {
 	for i := 0; i < 6; i++ {
 		pins[i].Output()
 	}
@@ -26,7 +26,7 @@ func setup(pins []gpio.Pin, disp []gpio.Pin) {
 	pins[0].High()
 }
 
-func teardown(pins []gpio.Pin, disp []gpio.Pin) {
+func teardown() {
 	for i := 0; i < 6; i++ {
 		pins[i].Low()
 	}
@@ -68,7 +68,7 @@ func cycle(button *gpio.Pin) {
 	pins[5].High()
 }
 
-func numbers(number int, disp []gpio.Pin) {
+func numbers(number int) {
 	switch number {
 	case 0:
 		disp[0].High()
