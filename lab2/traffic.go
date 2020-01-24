@@ -12,7 +12,7 @@ var (
 	pins [6]gpio.Pin
 	// Outline	      A,  B,  C,  D,  E,  F,  G1,G2
 	disp [8]gpio.Pin
-  cyclechan = make(chan bool, 1)
+  cyclechan = make(chan bool)
 )
 
 func setup() {
