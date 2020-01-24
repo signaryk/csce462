@@ -12,8 +12,9 @@ var (
 	pins [6]gpio.Pin
 	// Outline	      A,  B,  C,  D,  E,  F,  G1,G2
 	disp [8]gpio.Pin
-  Cyclechan = make(chan bool)
 )
+
+var Cyclechan chan bool
 
 func setup() {
 	for i := 0; i < 6; i++ {
@@ -180,7 +181,9 @@ func handler(*gpio.Pin){
 }
 
 func main() {
-	if err := gpio.Open(); err != nil {
+	Cyclechan = make(chan bool, 1)
+
+  if err := gpio.Open(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
