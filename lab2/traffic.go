@@ -12,7 +12,7 @@ var (
 	pins [6]gpio.Pin
 	// Outline	      A,  B,  C,  D,  E,  F,  G1,G2
 	disp [8]gpio.Pin
-
+  cyclechan = make(chan bool, 1)
 )
 
 func setup() {
@@ -36,7 +36,9 @@ func teardown() {
 	fmt.Println("Teardown complete")
 }
 
-func cycle(button *gpio.Pin) {
+func cycle() {
+  <-cyclechan
+
 	pins[5].Low()
 	for i := 0; i < 3; i++{
 		pins[4].High()
@@ -66,6 +68,10 @@ func cycle(button *gpio.Pin) {
 	pins[0].High()
 	pins[3].Low()
 	pins[5].High()
+
+  time.Sleep(time.Second * 3)
+  numbers(-1)
+  time.Sleep(time.Second * 17)
 }
 
 func numbers(number int) {
@@ -186,7 +192,11 @@ func main() {
 
 	defer teardown()
 
-  button.Watch(gpio.EdgeRising, cycle)
+  go cycle()
+
+  button.Watch(gpio.EdgeRising, func(*gpio.Pin){
+    cyclechan <- true
+  })
 
 	setup()
 
