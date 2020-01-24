@@ -49,20 +49,20 @@ func cycle(button *gpio.Pin) {
 	pins[2].High()
 	j := 9
 	for j > 4 {
-		numbers(j, disp)
+		numbers(j)
 		time.Sleep(time.Second)
 		j--
 	}
 	pins[2].Low()
 	for j > 0 {
-		numbers(j, disp)
+		numbers(j)
 		pins[1].High()
 		time.Sleep(time.Second / 2)
 		pins[1].Low()
 		time.Sleep(time.Second / 2)
 		j--
 	}
-	numbers(j, disp)
+	numbers(j)
 	pins[0].High()
 	pins[3].Low()
 	pins[5].High()
@@ -178,17 +178,17 @@ func main() {
 	var button = gpio.NewPin(21)
 
   // Pin Outline:       R1, B1, G1, R2, B2, G2
-	pins = []gpio.Pin{*gpio.NewPin(17), *gpio.NewPin(22), *gpio.NewPin(27),
+	pins = [6]gpio.Pin{*gpio.NewPin(17), *gpio.NewPin(22), *gpio.NewPin(27),
 		*gpio.NewPin(18), *gpio.NewPin(24), *gpio.NewPin(23)}
 	// Outline	      A,  B,  C,  D,  E,  F,  G1,G2
-	disp = []gpio.Pin{*gpio.NewPin(13), *gpio.NewPin(19), *gpio.NewPin(25), *gpio.NewPin(16),
+	disp = [8]gpio.Pin{*gpio.NewPin(13), *gpio.NewPin(19), *gpio.NewPin(25), *gpio.NewPin(16),
 		*gpio.NewPin(20), *gpio.NewPin(26), *gpio.NewPin(6), *gpio.NewPin(12)}
 
-	defer teardown(pins, disp)
+	defer teardown()
 
   button.Watch(gpio.EdgeRising, cycle)
 
-	setup(pins, disp)
+	setup()
 
 	/*
   for {
