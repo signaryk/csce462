@@ -38,7 +38,7 @@ func teardown() {
 }
 
 func cycle() {
-  <-Cyclechan
+  //<-Cyclechan
   fmt.Println("Channel read")
 
 	pins[5].Low()
@@ -175,9 +175,10 @@ func numbers(number int) {
 	}
 }
 
-func handler(*gpio.Pin){
-  Cyclechan <- true
-  fmt.Println("Channel written")
+func handler(button *gpio.Pin){
+  button.Unwatch()
+  cycle()
+  button.Watch(gpio.EdgeRising, handler)
 }
 
 func main() {
@@ -200,8 +201,6 @@ func main() {
 		*gpio.NewPin(20), *gpio.NewPin(26), *gpio.NewPin(6), *gpio.NewPin(12)}
 
 	defer teardown()
-
-  go cycle()
 
   button.Watch(gpio.EdgeRising, handler)
 
